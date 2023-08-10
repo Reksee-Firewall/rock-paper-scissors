@@ -119,4 +119,5 @@ function game() {
 }
 
 const startGame = 0; 
-startGame = game();
+
+// startGame = game();

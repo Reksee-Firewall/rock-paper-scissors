@@ -2,10 +2,42 @@
 <html lang="en-US">
     <head>
         <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href = "styles.css" rel = "stylesheet">
         <title>Rock, Paper & Scissors</title>
+        <link href= "data/robot.png" rel="icon">
     </head>
     <body>
         <!-- Content -->
+        <header>
+            <img src="data/header-img.png" alt="Letreiro escrito 'Rock, Paper And Scissors'.">
+            <ul>
+                <li><a href="">HOME</a></li>
+                <li><a href="">ABOUT US</a></li>
+                <li><a href="">COPYRIGHT</a></li>
+            </ul>
+        </header>
+
+        <div id="main-screen">
+            <div id="versus-box">
+                <div id="player-icon">
+                    <img src="data/player-icon.png" alt="A human icon.">
+                    <!-- Here you'll be able to swap genders. -->
+                </div>
+                <a href="">
+                    <div id="versus-icon">
+                        <img src="data/versus-icon.png" alt="A versus icon.">
+                        <p>CLICK ABOVE TO START</p>
+                    </div>
+                </a>
+                <img id="computer-icon" src="data/computer-icon.png" alt="A robot icon.">
+            </div>
+        </div>
+
+        <footer>
+            <p>Copyright © Reksee-Firewall 2023</p>
+        </footer>
         <script src="main.js"></script>
     </body>
-</html>
+</html> 

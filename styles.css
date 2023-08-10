@@ -1,0 +1,134 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css?family=Silkscreen');
+
+/* CSS */
+
+html {
+    font-family: 'Silkscreen';
+    font-size: 16px; /* Setting the root font size to 16px */
+    color: hsl(0, 100%, 100%);
+}  
+
+* {
+    box-sizing: border-box;
+    margin: 0rem;
+    padding: 0rem;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+header {
+    background-color: hsl(219, 42%, 8%);
+    height: 15vh;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 4rem;
+    padding-right: 5rem;
+}
+
+header img {
+    width: 30rem;
+    height: min-content;
+}
+
+header ul {
+    display: inline-flex;
+    list-style-type: none;
+    gap: 3rem;
+    color: hsl(0, 0%, 70%);
+}
+
+header li:hover {
+    color: hsl(0, 100%, 100%);
+}
+
+#main-screen {
+    background-color: hsl(215, 43%, 14%);
+    height: 75vh;
+    background-image: url("data/stars-background.png");
+    background-size: cover; 
+    background-position: initial;
+    display: flex;
+    align-items: center;
+}
+
+#versus-box {
+    background-image: url("data/background-spots.png");
+    background-size: contain; 
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 20rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#player-icon img {
+    width: 8rem;
+    height: auto;
+}
+
+#versus-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#versus-icon img {
+    width: 6rem;
+    height: auto;
+    text-align: center;
+    padding-bottom: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+#versus-icon img:hover {
+    width: 7rem;
+}
+
+#versus-icon p {
+    width: 8rem;
+    text-align: center;
+    font-style: italic;
+}
+
+#computer-icon {
+    width: 8rem;
+    height: auto;
+}
+
+footer {
+    background-color: hsl(219, 42%, 8%);
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Between half a monitor and a monitor. */
+@media only screen and (max-width: 900px) {
+    header {
+        background-color: hsl(219, 42%, 8%);
+        height: 15vh;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-left: 4rem;
+        padding-right: 4rem;
+    }
+}
+
+/* Less than half a monitor. */
+@media only screen and (max-width: 680px) {
+}
