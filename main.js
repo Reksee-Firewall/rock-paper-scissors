@@ -1,3 +1,5 @@
+/* Legacy version */
+
 function getComputerChoice() {
     const returnInt = Math.floor(Math.random() * 3) + 1;
     if (returnInt === 1) {
@@ -118,6 +120,72 @@ function game() {
     } while (!isOver); 
 }
 
-const startGame = 0; 
+/* New version */
 
-// startGame = game();
+/* Upcoming features: 
+   - Shrink and grow animations. */
+
+// Creates a fade-in/fade-out permanent toggle state.
+function toggleFade(element, timeToToggle) {
+    if (element.classList.contains("fade-in")) {
+        element.classList.remove("fade-in");
+        element.classList.add("fade-out");
+    } else {
+        element.classList.remove("fade-out");
+        element.classList.add("fade-in");
+    }
+    setTimeout(() => {
+        toggleFade(element, timeToToggle);
+    }, timeToToggle);
+}
+
+// Stars background toggle:
+const toggleStars = document.getElementById("stars");
+toggleFade(toggleStars, 2000);
+
+// "Click above" toggle:
+const toggleText = document.getElementById("clickAbove");
+toggleFade(toggleText, 1000);
+
+// When user set 'click' event, a copyright warning message will appear.
+const mainScreen = document.querySelector('#main-screen');
+const copyrightButton = document.querySelector('#copyright');
+copyrightButton.addEventListener('click', () => {
+    // Message Pop-Up
+    const copyMessage =  document.createElement('div');
+    copyMessage.classList.add('copy-message')
+    mainScreen.appendChild(copyMessage);
+    // Exit Button
+    const exitButton = document.createElement('button');
+    exitButton.classList.add('exitButton');
+    exitButton.textContent = 'X'; 
+    copyMessage.appendChild(exitButton);
+    // Link Button
+    const linkButton = document.createElement('button');
+    linkButton.classList.add('linkButton');
+    linkButton.textContent = 'Click Here';
+    copyMessage.appendChild(linkButton);
+    // When user set 'click' event, warning is closed. 
+    exitButton.addEventListener('click', () => {
+        copyMessage.remove();
+    });
+    // When user set 'click' event, it opens an hyperlink.
+    linkButton.addEventListener('click', () => {
+        window.open("https://github.com/Reksee-Firewall/rock-paper-scissors", "_blank");
+    });
+});
+
+// When user set 'click' event, the versus box will vanish.
+const vsButton = document.querySelector('#versus-button');
+vsButton.addEventListener('click', () => {
+    // Get a reference to the element you want to remove: 
+    const versusBox = document.querySelector('#versus-box');
+    versusBox.classList.add('fadeOut');
+    setTimeout(() => {
+        versusBox.remove();
+    }, 500);
+});
+
+// Start Game
+
+// Draw HUD
