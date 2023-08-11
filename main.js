@@ -125,6 +125,78 @@ function game() {
 /* Upcoming features: 
    - Shrink and grow animations. */
 
+function startHUD() {
+    // Draw HUD
+    const pageBody = document.querySelector('#content');
+    const footerHUD = document.createElement('div');
+    footerHUD.classList.add("footerHUD");
+
+    // Player Score
+    playerScore = document.createElement('figure'); 
+    pScoreImg = document.createElement('img');
+    pScoreImg.src = 'data/score-icon.png'; 
+    pScoreImg.alt = 'Player score icon.';
+    pScoreTxt = document.createElement('span');
+    pScoreTxt.textContent = 0;
+
+    playerScore.classList.add("pScoreContainer");
+    pScoreTxt.classList.add("pScoreTxt");
+
+    playerScore.appendChild(pScoreImg);
+    playerScore.appendChild(pScoreTxt);
+    // <--
+
+    // Player Icon 
+    playerIcon = document.createElement('img');
+    playerIcon.src = 'data/player-icon.png';
+    playerIcon.alt = 'Player icon.';
+    playerIcon.classList.add('icon');
+    playerScore.appendChild(playerIcon);
+    // <-- 
+
+    // Unknown Player Cards
+    unknownPlayer = document.createElement('img');
+    unknownPlayer.src = 'data/unknown-cards.png'; 
+    unknownPlayer.alt = 'Dark color cards of unknown value.';
+    unknownPlayer.classList.add("UnkPlayer"); 
+
+    // Unknown Computer Cards
+    unknownComputer = document.createElement('img');
+    unknownComputer.src = 'data/unknown-cards.png'; 
+    unknownComputer.alt = 'Dark color cards of unknown value.';
+    unknownComputer.classList.add("UnkComputer"); 
+
+    // Computer Score
+    computerScore = document.createElement('figure'); 
+    cScoreImg = document.createElement('img');
+    cScoreImg.src = 'data/score-icon.png'; 
+    cScoreImg.alt = 'Computer score icon.';
+    cScoreTxt = document.createElement('span');
+    cScoreTxt.textContent = 0;
+
+    computerScore.classList.add("cScoreContainer");
+    cScoreTxt.classList.add("cScoreTxt");
+
+    computerScore.appendChild(cScoreImg);
+    computerScore.appendChild(cScoreTxt);
+    // <--
+
+    // Computer Icon
+    computerIcon = document.createElement('img');
+    computerIcon.src = 'data/computer-icon.png';
+    computerIcon.alt = 'Computer icon.';
+    computerIcon.classList.add('icon');
+    computerScore.appendChild(computerIcon);
+    // <-- 
+
+    // Append items to HUD
+    footerHUD.appendChild(playerScore);
+    footerHUD.appendChild(unknownPlayer);
+    footerHUD.appendChild(unknownComputer);
+    footerHUD.appendChild(computerScore);
+    pageBody.appendChild(footerHUD);
+}
+
 // Creates a fade-in/fade-out permanent toggle state.
 function toggleFade(element, timeToToggle) {
     if (element.classList.contains("fade-in")) {
@@ -175,7 +247,7 @@ copyrightButton.addEventListener('click', () => {
     });
 });
 
-// When user set 'click' event, the versus box will vanish.
+// When user set 'click' event, the versus box will vanish. Then, the game will start.
 const vsButton = document.querySelector('#versus-button');
 vsButton.addEventListener('click', () => {
     // Get a reference to the element you want to remove: 
@@ -183,9 +255,7 @@ vsButton.addEventListener('click', () => {
     versusBox.classList.add('fadeOut');
     setTimeout(() => {
         versusBox.remove();
+        // Start Game
+        startHUD(); 
     }, 500);
 });
-
-// Start Game
-
-// Draw HUD

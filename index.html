@@ -9,34 +9,37 @@
         <link href= "data/robot.png" rel="icon">
     </head>
     <body>
-        <!-- Content -->
-        <header>
-            <img src="data/header-img.png" alt="Letreiro escrito 'Rock, Paper And Scissors'.">
-            <ul>
-                <li><a href="https://reksee-firewall.github.io/rock-paper-scissors/">HOME</a></li>
-                <li><a href="https://github.com/Reksee-Firewall" target="_blank">ABOUT US</a></li>
-                <li id="copyright">COPYRIGHT</li>
-            </ul>
-        </header>
+        <div id="content">
+            <!-- Content -->
+            <header>
+                <img src="data/header-img.png" alt="Letreiro escrito 'Rock, Paper And Scissors'.">
+                <ul>
+                    <li><a href="http://127.0.0.1:5500/index.html">HOME</a></li>
+                    <li><a href="https://github.com/Reksee-Firewall" target="_blank">ABOUT US</a></li>
+                    <li id="copyright">COPYRIGHT</li>
+                </ul>
+            </header>
 
-        <div id="main-screen">
-            <figure id="stars" class="fade"></figure>
-            <div id="versus-box">
-                <div id="player-icon">
-                    <img src="data/player-icon.png" alt="A human icon.">
-                    <!-- Here you'll be able to swap genders. -->
+            <div id="main-screen">
+                <figure id="stars" class="fade"></figure>
+                <div id="versus-box">
+                    <div id="player-icon">
+                        <img src="data/player-icon.png" alt="A human icon.">
+                        <!-- Here you'll be able to swap genders. -->
+                    </div>
+                    <div id="versus-icon">
+                        <img id = "versus-button" src="data/versus-icon.png" alt="A versus icon.">
+                        <p id="clickAbove" class="fade">CLICK ABOVE TO START</p>
+                    </div>
+                    <img id="computer-icon" src="data/computer-icon.png" alt="A robot icon.">
                 </div>
-                <div id="versus-icon">
-                    <img id = "versus-button" src="data/versus-icon.png" alt="A versus icon.">
-                    <p id="clickAbove" class="fade">CLICK ABOVE TO START</p>
-                </div>
-                <img id="computer-icon" src="data/computer-icon.png" alt="A robot icon.">
             </div>
-        </div>
 
-        <footer>
-            <p>Copyright © Reksee-Firewall 2023</p>
-        </footer>
+            <footer>
+                <p>Copyright © Reksee-Firewall 2023</p>
+            </footer>
+        </div>
+        
         <script src="main.js"></script>
     </body>
 </html> 

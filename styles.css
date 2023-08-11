@@ -201,6 +201,76 @@ opacity: 0;
     background-color: hsl(0, 100%, 100%);
 }
 
+/* Footer HUD */
+.footerHUD {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    position: absolute;
+    justify-content: space-around;
+    gap: 16rem;
+    bottom: 0;
+    width: 100%;
+    height: 12rem;
+    border: 2px solid green;
+}
+
+/* Scoreboard */
+.pScoreContainer {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    gap: 1rem;
+    left: 2.45%;
+    border: 2px solid red;
+}
+.pScoreContainer img {
+    width: min-content;
+    height: min-content;
+}
+.pScoreContainer .icon {
+    width: 8rem;
+    height: auto;
+}
+.pScoreTxt {
+    position: absolute;
+    left: 10.3%;
+    top: 13%;
+    font-size: 2rem;
+    color: black;
+    font-weight: 900;
+}
+.UnkPlayer {
+    border: 2px solid blue;
+}
+.UnkComputer {
+    border: 2px solid blue;
+}
+.cScoreContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    position: absolute;
+    gap: 1rem;
+    right: 3%;
+    border: 2px solid red;
+}
+.cScoreContainer img {
+    width: min-content;
+    height: min-content;
+}
+.cScoreContainer .icon {
+    width: 8rem;
+    height: auto;
+}
+.cScoreTxt {
+    position: absolute;
+    right: 7.8%;
+    top: 13%;
+    font-size: 2rem;
+    color: black;
+    font-weight: 900;
+}
+
 /* Between half a monitor and a monitor. */
 @media only screen and (max-width: 900px) {
     header {
