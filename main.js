@@ -1,61 +1,217 @@
-/* Legacy version */
+/* Upcoming features: 
+   - Display TimeToResetAnimation();
+   - Display game over message; 
+   - Play UI sounds;
+   - Add beter animations; 
+   - Solve remaining bugs;
+   - Resize it to other window sizes; 
+   - Remove beta features */
 
-function getComputerChoice() {
-    const returnInt = Math.floor(Math.random() * 3) + 1;
-    if (returnInt === 1) {
-        return 'Rock';
-    } else if (returnInt === 2) {
-        return 'Paper';
+// Global variables:
+const mainScreen = document.querySelector("#main-screen");
+const rowOfCards = document.createElement('div');
+rowOfCards.classList.add('cardsConteiner');
+let playerSum = 0;
+let computerSum = 0;
+
+// Well, it draws cards. 
+const rock = document.createElement('img');
+const paper = document.createElement('img');
+const scissors = document.createElement('img');
+function drawCards() {
+    rock.src = 'assets/cards-selection/default-rock.png';
+    rock.alt = 'A card with a rock painted in it.'; 
+    rock.classList.add('cards');
+    rock.classList.add('card-one');
+    rowOfCards.appendChild(rock);
+
+    paper.src = 'assets/cards-selection/default-paper.png'
+    paper.alt = 'A card with a paper painted in it.';
+    paper.classList.add('cards');
+    paper.classList.add('card-two');
+    rowOfCards.appendChild(paper);
+
+    scissors.src = 'assets/cards-selection/default-scissors.png'
+    scissors.alt = 'A card with scissors painted in it.'; 
+    scissors.classList.add('cards');
+    scissors.classList.add('card-three');
+    rowOfCards.appendChild(scissors);
+
+    mainScreen.appendChild(rowOfCards);
+    // <--
+}
+
+// Draws the in-game UI.
+const pageBody = document.querySelector('#content');
+const footerHUD = document.createElement('div');
+const playerScore = document.createElement('figure'); 
+const pScoreImg = document.createElement('img');
+let pScoreTxt = document.createElement('span');
+const playerIcon = document.createElement('img');
+const unknownPlayer = document.createElement('img');
+const unknownComputer = document.createElement('img');
+const computerScore = document.createElement('figure'); 
+const cScoreImg = document.createElement('img');
+let cScoreTxt = document.createElement('span');
+const computerIcon = document.createElement('img');
+function drawFooterHUD() {
+    // Draws HUD
+    footerHUD.classList.add("footerHUD");
+    // Player Score
+    pScoreImg.src = 'assets/score-icon.png'; 
+    pScoreImg.alt = 'Player score icon.';
+    pScoreTxt.textContent = 0;
+    playerScore.classList.add("pScoreContainer");
+    pScoreTxt.classList.add("pScoreTxt");
+    playerScore.appendChild(pScoreImg);
+    playerScore.appendChild(pScoreTxt);
+    // <--
+    // Player Icon 
+    playerIcon.src = 'assets/player-icon.png';
+    playerIcon.alt = 'Player icon.';
+    playerIcon.classList.add('icon');
+    playerScore.appendChild(playerIcon);
+    // <-- 
+    // Unknown Player Cards
+    unknownPlayer.src = 'assets/unknown-cards.png'; 
+    unknownPlayer.alt = 'Dark color cards of unknown value.';
+    unknownPlayer.classList.add("UnkPlayer"); 
+    // Unknown Computer Cards
+    unknownComputer.src = 'assets/unknown-cards.png'; 
+    unknownComputer.alt = 'Dark color cards of unknown value.';
+    unknownComputer.classList.add("UnkComputer"); 
+    // Computer Score
+    cScoreImg.src = 'assets/score-icon.png'; 
+    cScoreImg.alt = 'Computer score icon.';
+    cScoreTxt.textContent = 0;
+    computerScore.classList.add("cScoreContainer");
+    cScoreTxt.classList.add("cScoreTxt");
+    computerScore.appendChild(cScoreImg);
+    computerScore.appendChild(cScoreTxt);
+    // <--
+    // Computer Icon
+    computerIcon.src = 'assets/computer-icon.png';
+    computerIcon.alt = 'Computer icon.';
+    computerIcon.classList.add('icon');
+    computerScore.appendChild(computerIcon);
+    // <-- 
+    // Append items to HUD
+    footerHUD.appendChild(playerScore);
+    footerHUD.appendChild(unknownPlayer);
+    footerHUD.appendChild(unknownComputer);
+    footerHUD.appendChild(computerScore);
+    pageBody.appendChild(footerHUD);
+}
+
+// Reset DOM every time a match ends.
+const eventBarrier = document.createElement('div'); 
+eventBarrier.setAttribute("id", "eventBarrier");
+function resetMatch() {
+    if (playerSum >= 5) {
+        alert("You WIN!");
+    } else if (computerSum >= 5) {
+        alert("You LOOSE!"); 
     } else {
-        return 'Scissors';
+        mainScreen.removeChild(eventBarrier);
+        rock.src = 'assets/cards-selection/default-rock.png';
+        rock.classList.remove('selected-card');
+        paper.src = 'assets/cards-selection/default-paper.png';
+        paper.classList.remove('selected-card');
+        scissors.src = 'assets/cards-selection/default-scissors.png';
+        scissors.classList.remove('selected-card');
     }
 }
 
-function playRound(playerSelection, computerSelection) {
-    const lowerPlayerSelection = playerSelection.toLowerCase();
+// Display TimeToResetAnimation().
+// <--
+
+// A round is displayed.
+function playRound(playerSelection=0, computerSelection=0) {
+    // First, we'll block the events with a 'pos: absolute' barrier.
+    mainScreen.appendChild(eventBarrier);
+    // Then, we may proceed to the logic. [1] = Rock; [2] = Paper; [3] = Scissors. 
     switch(computerSelection) {
-        case 'Rock': 
-            switch(lowerPlayerSelection) {
-                case 'rock':
-                    return "Draw! Both chose the same object.";
-                    break; 
-                case 'paper': 
-                    return "You Win! Paper beats Rock";
+        case 1: 
+            rock.src = 'assets/cards-selection/red-rock.png';
+            rock.classList.add('selected-card');
+            switch(playerSelection) {
+                case 1: 
+                    rock.src = 'assets/cards-selection/purple-rock.png';
+                    setTimeout(() => {
+                        resetMatch();
+                    }, 2000);
                     break;
-                case 'scissors':
-                    return "You Lose! Rock beats Scissors";
+                case 2:
+                    playerSum++;
+                    setTimeout(() => {
+                        pScoreTxt.textContent = playerSum;
+                        resetMatch();
+                    }, 2000);resetMatch();
+                    break;
+                case 3:
+                    computerSum++;
+                    setTimeout(() => {
+                        cScoreTxt.textContent = computerSum;
+                        resetMatch();
+                    }, 2000);
+                    break;
+                default:
+                    console.error("This isn't supposed to happen.");
+                    break;
+            }
+            break; 
+        case 2:
+            paper.src = 'assets/cards-selection/red-paper.png';
+            paper.classList.add('selected-card');
+            switch(playerSelection) {
+                case 1:
+                    computerSum++;
+                    setTimeout(() => {
+                        cScoreTxt.textContent = computerSum;
+                        resetMatch();
+                    }, 2000);
+                    break;
+                case 2:
+                    paper.src = 'assets/cards-selection/purple-paper.png';
+                    setTimeout(() => {
+                        resetMatch();
+                    }, 2000);
+                    break;
+                case 3:
+                    playerSum++;
+                    setTimeout(() => {
+                        pScoreTxt.textContent = playerSum;
+                        resetMatch();
+                    }, 2000);
                     break;
                 default:
                     console.error("This isn't supposed to happen."); 
                     break;
             }
             break; 
-        case 'Paper':
-            switch(lowerPlayerSelection) {
-                case 'rock':
-                    return "You Lose! Paper beats Rock";
-                    break; 
-                case 'paper':
-                    return "Draw! Both chose the same object.";
+        case 3:
+            scissors.src = 'assets/cards-selection/red-scissors.png';
+            scissors.classList.add('selected-card');
+            switch(playerSelection) {
+                case 1:
+                    playerSum++;
+                    setTimeout(() => {
+                        pScoreTxt.textContent = playerSum;
+                        resetMatch();
+                    }, 2000);
                     break;
-                case 'scissors':
-                    return "You Win! Scissors beats Paper";
+                case 2: 
+                    computerSum++;
+                    setTimeout(() => {
+                        cScoreTxt.textContent = computerSum;
+                        resetMatch();
+                    }, 2000);
                     break;
-                default:
-                    console.error("This isn't supposed to happen."); 
-                    break;
-            }
-            break; 
-        case 'Scissors':
-            switch(lowerPlayerSelection) {
-                case 'rock':
-                    return "You Win! Rock beats Scissors";
-                    break; 
-                case 'paper': 
-                    return "You Lose! Scissors beats paper";
-                    break;
-                case 'scissors':
-                    return "Draw! Both chose the same object.";
+                case 3:
+                    scissors.src = 'assets/cards-selection/purple-scissors.png';
+                    setTimeout(() => {
+                        resetMatch();
+                    }, 2000);
                     break;
                 default:
                     console.error("This isn't supposed to happen."); 
@@ -65,136 +221,10 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function verifyAnswer(playerSelection) {
-    const lowerString = playerSelection.toLowerCase();
-    if (lowerString === 'rock') {
-        return true;
-    } else if (lowerString === 'paper') {
-        return true;
-    } else if (lowerString === 'scissors') {
-        return true;
-    } else {
-        alert("Invalid entry. Please, try again.");
-        return false; 
-    }
-}
-
-function game() {
-    let matchCounter = 0; 
-    let playerSelection;
-    let computerSelection; 
-    let isOver = false;
-    let matchResult = "";
-    let wordsArray; 
-    let playerScore = 0;
-    let computerScore = 0;
-
-    alert("Welcome to Jokenpo! You'll have five stands against the computer. Good luck!");
-    do {
-        alert(`Round Nº${matchCounter + 1}. Be ready!`);
-        do {
-            playerSelection = prompt("Rock, Paper or Scissors?", playerSelection=1);
-            if (playerSelection == null) 
-                break;
-        } while (!verifyAnswer(playerSelection));
-        computerSelection = getComputerChoice();
-        matchResult = playRound(playerSelection, computerSelection); 
-        alert(matchResult); 
-        wordsArray = matchResult.split(" "); 
-        if (wordsArray[1] === 'Win!') {
-            playerScore++;
-        } else if (wordsArray[1] === 'Lose!') {
-            computerScore++;
-        }
-        matchCounter++; 
-        if (matchCounter >= 5) {
-            alert("Player and Computer got the same score. Draw!");
-            isOver = true;
-        } else if (playerScore >= 3) {
-            alert("You got the highest score. Well done!");
-            isOver = true;
-        } else if (computerScore >= 3) {
-            alert("Computer got the highest score. Game over!");
-            isOver = true;
-        }
-    } while (!isOver); 
-}
-
-/* New version */
-
-/* Upcoming features: 
-   - Shrink and grow animations. */
-
-function startHUD() {
-    // Draw HUD
-    const pageBody = document.querySelector('#content');
-    const footerHUD = document.createElement('div');
-    footerHUD.classList.add("footerHUD");
-
-    // Player Score
-    playerScore = document.createElement('figure'); 
-    pScoreImg = document.createElement('img');
-    pScoreImg.src = 'data/score-icon.png'; 
-    pScoreImg.alt = 'Player score icon.';
-    pScoreTxt = document.createElement('span');
-    pScoreTxt.textContent = 0;
-
-    playerScore.classList.add("pScoreContainer");
-    pScoreTxt.classList.add("pScoreTxt");
-
-    playerScore.appendChild(pScoreImg);
-    playerScore.appendChild(pScoreTxt);
-    // <--
-
-    // Player Icon 
-    playerIcon = document.createElement('img');
-    playerIcon.src = 'data/player-icon.png';
-    playerIcon.alt = 'Player icon.';
-    playerIcon.classList.add('icon');
-    playerScore.appendChild(playerIcon);
-    // <-- 
-
-    // Unknown Player Cards
-    unknownPlayer = document.createElement('img');
-    unknownPlayer.src = 'data/unknown-cards.png'; 
-    unknownPlayer.alt = 'Dark color cards of unknown value.';
-    unknownPlayer.classList.add("UnkPlayer"); 
-
-    // Unknown Computer Cards
-    unknownComputer = document.createElement('img');
-    unknownComputer.src = 'data/unknown-cards.png'; 
-    unknownComputer.alt = 'Dark color cards of unknown value.';
-    unknownComputer.classList.add("UnkComputer"); 
-
-    // Computer Score
-    computerScore = document.createElement('figure'); 
-    cScoreImg = document.createElement('img');
-    cScoreImg.src = 'data/score-icon.png'; 
-    cScoreImg.alt = 'Computer score icon.';
-    cScoreTxt = document.createElement('span');
-    cScoreTxt.textContent = 0;
-
-    computerScore.classList.add("cScoreContainer");
-    cScoreTxt.classList.add("cScoreTxt");
-
-    computerScore.appendChild(cScoreImg);
-    computerScore.appendChild(cScoreTxt);
-    // <--
-
-    // Computer Icon
-    computerIcon = document.createElement('img');
-    computerIcon.src = 'data/computer-icon.png';
-    computerIcon.alt = 'Computer icon.';
-    computerIcon.classList.add('icon');
-    computerScore.appendChild(computerIcon);
-    // <-- 
-
-    // Append items to HUD
-    footerHUD.appendChild(playerScore);
-    footerHUD.appendChild(unknownPlayer);
-    footerHUD.appendChild(unknownComputer);
-    footerHUD.appendChild(computerScore);
-    pageBody.appendChild(footerHUD);
+// Allows the computer to select one of the cards.
+function getComputerChoice() {
+    const returnInt = Math.floor(Math.random() * 3) + 1;
+    return returnInt;
 }
 
 // Creates a fade-in/fade-out permanent toggle state.
@@ -211,6 +241,71 @@ function toggleFade(element, timeToToggle) {
     }, timeToToggle);
 }
 
+// Functions used in Event Listeners
+let playerSelection = 0;
+function mouseIn(elementNode) {
+    if (elementNode.classList.contains('card-one')) {
+        if (!rock.classList.contains('selected-card')) {
+            rock.src = 'assets/cards-selection/white-rock.png'; 
+        }
+        rock.classList.add('hovering-card');
+    } else if (elementNode.classList.contains('card-two')) {
+        if (!paper.classList.contains('selected-card')) {
+            paper.src = 'assets/cards-selection/white-paper.png'; 
+        }
+        paper.classList.add('hovering-card');
+    } else if (elementNode.classList.contains('card-three')) {
+        if (!paper.classList.contains('selected-card')) {
+            paper.src = 'assets/cards-selection/white-paper.png'; 
+        }
+        scissors.classList.add('hovering-card');
+    } else {
+        console.error("Invalid elementNode given as argument to the function.");
+    }
+}
+function mouseOut(elementNode) {
+    if (elementNode.classList.contains('card-one')) {
+        if (!rock.classList.contains('selected-card')) {
+            rock.src = 'assets/cards-selection/default-rock.png'; 
+        }
+        rock.classList.remove('hovering-card');
+    } else if (elementNode.classList.contains('card-two')) {
+        if (!paper.classList.contains('selected-card')) {
+            paper.src = 'assets/cards-selection/default-paper.png'; 
+        }
+        paper.classList.remove('hovering-card');
+    } else if (elementNode.classList.contains('card-three')) {
+        if (!scissors.classList.contains('selected-card')) {
+            scissors.src = 'assets/cards-selection/default-scissors.png'; 
+        }
+        scissors.classList.remove('hovering-card');
+    } else {
+        console.error("Invalid elementNode given as argument to the function.");
+    }
+}
+function mouseClick(elementNode) {
+    if (elementNode.classList.contains('card-one')) {
+        rock.src = 'assets/cards-selection/blue-rock.png';
+        rock.classList.remove('hovering-card');
+        rock.classList.add('selected-card');
+        playerSelection = 1;
+    } else if (elementNode.classList.contains('card-two')) {
+        paper.src = 'assets/cards-selection/blue-paper.png';
+        paper.classList.remove('hovering-card');
+        paper.classList.add('selected-card');
+        playerSelection = 2;
+    } else if (elementNode.classList.contains('card-three')) {
+        scissors.src = 'assets/cards-selection/blue-scissors.png';
+        scissors.classList.remove('hovering-card');
+        scissors.classList.add('selected-card');
+        playerSelection = 3;
+    } else {
+        console.error("Invalid elementNode given as argument to the function.");
+    }
+    playRound(playerSelection, getComputerChoice());
+}
+// <--
+
 // Stars background toggle:
 const toggleStars = document.getElementById("stars");
 toggleFade(toggleStars, 2000);
@@ -219,43 +314,61 @@ toggleFade(toggleStars, 2000);
 const toggleText = document.getElementById("clickAbove");
 toggleFade(toggleText, 1000);
 
-// When user set 'click' event, a copyright warning message will appear.
-const mainScreen = document.querySelector('#main-screen');
+// When player set 'click' event, a copyright warning message will appear.
 const copyrightButton = document.querySelector('#copyright');
+const copyMessage =  document.createElement('div');
+const exitButton = document.createElement('button');
+const linkButton = document.createElement('button');
 copyrightButton.addEventListener('click', () => {
     // Message Pop-Up
-    const copyMessage =  document.createElement('div');
     copyMessage.classList.add('copy-message')
     mainScreen.appendChild(copyMessage);
     // Exit Button
-    const exitButton = document.createElement('button');
     exitButton.classList.add('exitButton');
     exitButton.textContent = 'X'; 
     copyMessage.appendChild(exitButton);
     // Link Button
-    const linkButton = document.createElement('button');
     linkButton.classList.add('linkButton');
     linkButton.textContent = 'Click Here';
     copyMessage.appendChild(linkButton);
-    // When user set 'click' event, warning is closed. 
+    // When player set 'click' event, warning is closed. 
     exitButton.addEventListener('click', () => {
         copyMessage.remove();
     });
-    // When user set 'click' event, it opens an hyperlink.
+    // When player set 'click' event, it opens an hyperlink.
     linkButton.addEventListener('click', () => {
         window.open("https://github.com/Reksee-Firewall/rock-paper-scissors", "_blank");
     });
 });
 
-// When user set 'click' event, the versus box will vanish. Then, the game will start.
+// When player set 'click' event, the versus box will vanish. Then, the game will start.
+const versusBox = document.querySelector('#versus-box');
 const vsButton = document.querySelector('#versus-button');
 vsButton.addEventListener('click', () => {
     // Get a reference to the element you want to remove: 
-    const versusBox = document.querySelector('#versus-box');
     versusBox.classList.add('fadeOut');
     setTimeout(() => {
         versusBox.remove();
         // Start Game
-        startHUD(); 
+        drawFooterHUD(); 
+        drawCards();
     }, 500);
 });
+
+// When player hovers over a card, an animation will be displayed.
+// Rock Card 
+rock.addEventListener('mouseenter', () => mouseIn(rock));
+rock.addEventListener('mouseleave', () => mouseOut(rock));
+// <--
+// Paper Card
+paper.addEventListener('mouseenter', () => mouseIn(paper));
+paper.addEventListener('mouseleave', () => mouseOut(paper));
+// <-- 
+// Scissors Card
+scissors.addEventListener('mouseenter', () => mouseIn(scissors));
+scissors.addEventListener('mouseleave', () => mouseOut(scissors));
+// <--
+// When player clicks on a card, an animation will be displayed and the match will be set. 
+rock.addEventListener('click', () => mouseClick(rock));
+paper.addEventListener('click', () => mouseClick(paper));
+scissors.addEventListener('click', () => mouseClick(scissors)); 

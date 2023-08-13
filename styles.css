@@ -53,17 +53,18 @@ header li:hover {
     position: relative;
     background-color: hsl(215, 43%, 14%);
     /* Legacy Code
-    background-image: url("data/stars-background.png");
+    background-image: url("assets/stars-background.png");
     background-size: cover; 
     background-position: initial; */
     height: 75vh;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 #versus-box {
     position: absolute;
-    background-image: url("data/background-spots.png");
+    background-image: url("assets/background-spots.png");
     background-size: contain; 
     background-position: center;
     background-repeat: no-repeat;
@@ -141,7 +142,7 @@ opacity: 0;
     position: relative;
     width: 100%;
     height: 100%;
-    background-image: url(data/stars-background.png);
+    background-image: url(assets/stars-background.png);
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
@@ -160,7 +161,7 @@ opacity: 0;
     /* -- */
     width: 31.25rem;
     height: 18.375rem; 
-    background-image: url("data/warning.png");
+    background-image: url("assets/warning.png");
     background-size: contain; 
     background-position: center;
     background-repeat: no-repeat;
@@ -212,7 +213,6 @@ opacity: 0;
     bottom: 0;
     width: 100%;
     height: 12rem;
-    border: 2px solid green;
 }
 
 /* Scoreboard */
@@ -222,7 +222,6 @@ opacity: 0;
     position: absolute;
     gap: 1rem;
     left: 2.45%;
-    border: 2px solid red;
 }
 .pScoreContainer img {
     width: min-content;
@@ -240,19 +239,12 @@ opacity: 0;
     color: black;
     font-weight: 900;
 }
-.UnkPlayer {
-    border: 2px solid blue;
-}
-.UnkComputer {
-    border: 2px solid blue;
-}
 .cScoreContainer {
     display: flex;
     flex-direction: row-reverse;
     position: absolute;
     gap: 1rem;
     right: 3%;
-    border: 2px solid red;
 }
 .cScoreContainer img {
     width: min-content;
@@ -269,6 +261,40 @@ opacity: 0;
     font-size: 2rem;
     color: black;
     font-weight: 900;
+}
+
+/* Cards Hover Section */
+.cardsConteiner {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    width: 36rem;
+    height: 24rem;
+    justify-content: center;
+    align-items: center;
+    top: 0rem;
+    gap: 2rem;
+    border: 2px solid red;
+}
+.cards {
+    width: 8rem;
+    height: min-content;
+    transition: all 0.1s ease;
+}
+.hovering-card {
+    width: 9rem;
+    cursor: pointer;
+}
+.selected-card {
+    margin-bottom: 2.6rem;
+}
+
+/* Cards Select Section */
+#eventBarrier {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border: 2px solid blue;
 }
 
 /* Between half a monitor and a monitor. */
