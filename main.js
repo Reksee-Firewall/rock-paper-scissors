@@ -1,7 +1,3 @@
-/* Upcoming features: 
-   - Play UI sounds;
-   - Resize it to other window sizes; */
-
 // Global variables:
 const mainScreen = document.querySelector("#main-screen");
 const rowOfCards = document.createElement('div');
@@ -110,11 +106,13 @@ youLoose.classList.add("gameOver");
 function resetMatch() {
     if (playerSum >= 5) {
         eventBarrier.appendChild(youWin);
+        playAudio(victoryAudio);
         setTimeout(() => {
             youWin.style.opacity = 1;
         }, 50);
     } else if (computerSum >= 5) {
         eventBarrier.appendChild(youLoose);
+        playAudio(overAudio);
         setTimeout(() => {
             youLoose.style.opacity = 1;
         }, 50);
@@ -130,16 +128,14 @@ function resetMatch() {
 }
 
 // Play Sounds
-function playSound(e) {
-    const audio = document.querySelector(`audio[data-key="${e.code}"]`);
-    const key = document.querySelector(`div[data-key="${e.code}"]`);
+const clickAudio = document.querySelector("#clickAudio")
+const overAudio = document.querySelector("#overAudio");
+const victoryAudio = document.querySelector("#victoryAudio");
+function playAudio(audio) {
     if (!audio) return;
-
-    key.classList.add('playing');
     audio.currentTime = 0;
     audio.play();
 }
-
 // A round is displayed.
 function playRound(playerSelection=0, computerSelection=0) {
     // We may proceed to the logic. [1] = Rock; [2] = Paper; [3] = Scissors. 
@@ -318,6 +314,8 @@ function mouseClick(elementNode) {
     } else {
         console.error("Invalid elementNode given as argument to the function.");
     }
+    // Play Audio
+    playAudio(clickAudio);
     // First, we'll block the events with a 'pos: absolute' barrier.
     mainScreen.appendChild(eventBarrier);
     playRound(playerSelection, getComputerChoice());
