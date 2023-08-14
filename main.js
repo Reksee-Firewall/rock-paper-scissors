@@ -1,16 +1,11 @@
 /* Upcoming features: 
-   - Display TimeToResetAnimation();
-   - Display game over message; 
    - Play UI sounds;
-   - Add beter animations; 
-   - Solve remaining bugs;
-   - Resize it to other window sizes; 
-   - Remove beta features */
+   - Resize it to other window sizes; */
 
 // Global variables:
 const mainScreen = document.querySelector("#main-screen");
 const rowOfCards = document.createElement('div');
-rowOfCards.classList.add('cardsConteiner');
+rowOfCards.classList.add('cardsContainer');
 let playerSum = 0;
 let computerSum = 0;
 
@@ -106,13 +101,25 @@ function drawFooterHUD() {
 // Reset DOM every time a match ends.
 const eventBarrier = document.createElement('div'); 
 eventBarrier.setAttribute("id", "eventBarrier");
+const youWin = document.createElement('img');
+youWin.src = "assets/you-win.png";
+youWin.classList.add("gameOver");
+const youLoose = document.createElement('img'); 
+youLoose.src = "assets/you-loose.png";
+youLoose.classList.add("gameOver"); 
 function resetMatch() {
     if (playerSum >= 5) {
-        alert("You WIN!");
+        eventBarrier.appendChild(youWin);
+        setTimeout(() => {
+            youWin.style.opacity = 1;
+        }, 50);
     } else if (computerSum >= 5) {
-        alert("You LOOSE!"); 
+        eventBarrier.appendChild(youLoose);
+        setTimeout(() => {
+            youLoose.style.opacity = 1;
+        }, 50);
     } else {
-        mainScreen.removeChild(eventBarrier);
+        eventBarrier.remove();
         rock.src = 'assets/cards-selection/default-rock.png';
         rock.classList.remove('selected-card');
         paper.src = 'assets/cards-selection/default-paper.png';
@@ -122,14 +129,20 @@ function resetMatch() {
     }
 }
 
-// Display TimeToResetAnimation().
-// <--
+// Play Sounds
+function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.code}"]`);
+    const key = document.querySelector(`div[data-key="${e.code}"]`);
+    if (!audio) return;
+
+    key.classList.add('playing');
+    audio.currentTime = 0;
+    audio.play();
+}
 
 // A round is displayed.
 function playRound(playerSelection=0, computerSelection=0) {
-    // First, we'll block the events with a 'pos: absolute' barrier.
-    mainScreen.appendChild(eventBarrier);
-    // Then, we may proceed to the logic. [1] = Rock; [2] = Paper; [3] = Scissors. 
+    // We may proceed to the logic. [1] = Rock; [2] = Paper; [3] = Scissors. 
     switch(computerSelection) {
         case 1: 
             rock.src = 'assets/cards-selection/red-rock.png';
@@ -146,7 +159,7 @@ function playRound(playerSelection=0, computerSelection=0) {
                     setTimeout(() => {
                         pScoreTxt.textContent = playerSum;
                         resetMatch();
-                    }, 2000);resetMatch();
+                    }, 2000);
                     break;
                 case 3:
                     computerSum++;
@@ -217,6 +230,9 @@ function playRound(playerSelection=0, computerSelection=0) {
                     console.error("This isn't supposed to happen."); 
                     break;
             } 
+            break;
+        default: 
+            console.error("This isn't supposed to happen.");
             break; 
     }
 }
@@ -255,8 +271,8 @@ function mouseIn(elementNode) {
         }
         paper.classList.add('hovering-card');
     } else if (elementNode.classList.contains('card-three')) {
-        if (!paper.classList.contains('selected-card')) {
-            paper.src = 'assets/cards-selection/white-paper.png'; 
+        if (!scissors.classList.contains('selected-card')) {
+            scissors.src = 'assets/cards-selection/white-scissors.png'; 
         }
         scissors.classList.add('hovering-card');
     } else {
@@ -286,22 +302,24 @@ function mouseOut(elementNode) {
 function mouseClick(elementNode) {
     if (elementNode.classList.contains('card-one')) {
         rock.src = 'assets/cards-selection/blue-rock.png';
-        rock.classList.remove('hovering-card');
         rock.classList.add('selected-card');
+        rock.classList.remove('hovering-card');
         playerSelection = 1;
     } else if (elementNode.classList.contains('card-two')) {
         paper.src = 'assets/cards-selection/blue-paper.png';
-        paper.classList.remove('hovering-card');
         paper.classList.add('selected-card');
+        paper.classList.remove('hovering-card');
         playerSelection = 2;
     } else if (elementNode.classList.contains('card-three')) {
         scissors.src = 'assets/cards-selection/blue-scissors.png';
-        scissors.classList.remove('hovering-card');
         scissors.classList.add('selected-card');
+        scissors.classList.remove('hovering-card');
         playerSelection = 3;
     } else {
         console.error("Invalid elementNode given as argument to the function.");
     }
+    // First, we'll block the events with a 'pos: absolute' barrier.
+    mainScreen.appendChild(eventBarrier);
     playRound(playerSelection, getComputerChoice());
 }
 // <--

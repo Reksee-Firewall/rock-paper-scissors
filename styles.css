@@ -21,6 +21,11 @@ a {
     color: inherit;
 }
 
+body {
+    max-height: 100vh;
+    overflow: hidden;
+}
+
 header {
     background-color: hsl(219, 42%, 8%);
     height: 15vh;
@@ -129,9 +134,9 @@ footer {
 .fade {
     opacity: 0;
     transition: opacity 1s ease-in-out;
-  }
+}
 .fade-in {
-opacity: 1;
+    opacity: 1;
 }
 .fade-out {
 opacity: 0;
@@ -264,7 +269,7 @@ opacity: 0;
 }
 
 /* Cards Hover Section */
-.cardsConteiner {
+.cardsContainer {
     display: flex;
     flex-direction: row;
     position: absolute;
@@ -274,7 +279,6 @@ opacity: 0;
     align-items: center;
     top: 0rem;
     gap: 2rem;
-    border: 2px solid red;
 }
 .cards {
     width: 8rem;
@@ -294,11 +298,19 @@ opacity: 0;
     width: 100%;
     height: 100%;
     position: absolute;
-    border: 2px solid blue;
+    display: flex; 
+    justify-content: center;
 }
 
-/* Between half a monitor and a monitor. */
-@media only screen and (max-width: 900px) {
+/* Game Over */
+.gameOver {
+    position: absolute;
+    top: 25%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+@media only screen and (max-width: 1000px) {
     header {
         background-color: hsl(219, 42%, 8%);
         height: 15vh;
@@ -310,8 +322,18 @@ opacity: 0;
         padding-left: 4rem;
         padding-right: 4rem;
     }
-}
+    
+    .gameOver {
+        max-width: min-content;
+        width: 85%;
+    }
 
-/* Less than half a monitor. */
-@media only screen and (max-width: 680px) {
+    .cardsContainer * {
+        max-width: 8rem;
+        width: 20vw;
+    }
+
+    footer p {
+        font-size: 80%;
+    }
 }
